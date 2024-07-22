@@ -116,6 +116,7 @@ Script que lee el archivo binario del modelo de red neuronal convolucional previ
 ## grad_cam.py
 
 Script que recibe la imagen y la procesa, carga el modelo, obtiene la predicción y la capa convolucional de interés para obtener las características relevantes de la imagen.
+
 ---
 
 ## Acerca del Modelo
