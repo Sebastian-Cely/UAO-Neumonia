@@ -1,6 +1,6 @@
-## Hola! Bienvenido a la herramienta para la detección rápida de neumonía
+## Herramienta para la detección rápida de neumonía
 
-Deep Learning aplicado en el procesamiento de imágenes radiográficas de tórax en formato DICOM con el fin de clasificarlas en 3 categorías diferentes:
+Deep Learning aplicado en el procesamiento de imágenes radiográficas de tórax en formato DICOM y JPEG con el fin de clasificarlas en 3 categorías diferentes:
 
 1. Neumonía Bacteriana
 
@@ -9,6 +9,13 @@ Deep Learning aplicado en el procesamiento de imágenes radiográficas de tórax
 3. Sin Neumonía
 
 Aplicación de una técnica de explicación llamada Grad-CAM para resaltar con un mapa de calor las regiones relevantes de la imagen de entrada.
+
+---
+## Modelo de visión
+
+El archivo del modelo `conv_MLP_84.h5` no está incluido en el repositorio debido a restricciones de tamaño de archivo. Es necesario descargarlo desde la siguiente URL y colocarlo en el directorio raíz del proyecto:
+
+[Descargar Modelo](https://drive.google.com/file/d/1vqGjqzX3BSNAAAaU7On8uceqPB4eVasD/view?usp=sharing)
 
 ---
 
@@ -23,7 +30,7 @@ Requerimientos necesarios para el funcionamiento:
 
 - Abra Anaconda Prompt y ejecute las siguientes instrucciones:
 
-  conda create -n tf tensorflow
+  conda create -n tf python=3.10
 
   conda activate tf
 
@@ -41,10 +48,41 @@ Uso de la Interfaz Gráfica:
 - Presione el botón 'Guardar' para almacenar la información del paciente en un archivo excel con extensión .csv
 - Presione el botón 'PDF' para descargar un archivo PDF con la información desplegada en la interfaz
 - Presión el botón 'Borrar' si desea cargar una nueva imagen
+--- 
 
----
+## Configuración y Despliegue con Docker 
 
-## Arquitectura de archivos propuesta.
+### Requisitos Previos
+
+- Docker instalado en el sistema.
+- Xming instalado y en ejecución (para usuarios de Windows).
+
+### Construir la Imagen de Docker
+
+    ```sh
+    docker build -t pneumonia-detection-app .
+    ```
+
+### Ejecutar el Contenedor de Docker
+
+1. **Iniciar Xming** (solo Windows):
+
+    - Asegurarse de que Xming esté instalado y en ejecución.
+    - Permitir conexiones iniciando Xming con la opción `-ac`.
+
+2. **Ejecutar el Contenedor de Docker:**
+
+    ```sh
+    docker run -it --rm -e DISPLAY=host.docker.internal:0 pneumonia-detection-app
+    ```
+
+    Alternativamente, se puede utilizar la dirección IP si `host.docker.internal` no funciona:
+
+    ```sh
+    docker run -it --rm -e DISPLAY=direccion-ip:0 pneumonia-detection-app
+    ```
+
+## Arquitectura de archivos.
 
 ## detector_neumonia.py
 
@@ -59,7 +97,7 @@ Retorna la clase, la probabilidad y una imagen el mapa de calor generado por Gra
 
 ## read_img.py
 
-Script que lee la imagen en formato DICOM para visualizarla en la interfaz gráfica. Además, la convierte a arreglo para su preprocesamiento.
+Script que lee la imagen en formato DICOM o JPEG para visualizarla en la interfaz gráfica. Además, la convierte a arreglo para su preprocesamiento.
 
 ## preprocess_img.py
 
@@ -73,12 +111,11 @@ Script que recibe el arreglo proveniento de read_img.py, realiza las siguientes 
 
 ## load_model.py
 
-Script que lee el archivo binario del modelo de red neuronal convolucional previamente entrenado llamado 'WilhemNet86.h5'.
+Script que lee el archivo binario del modelo de red neuronal convolucional previamente entrenado llamado 'conv_MLP_84.h5'.
 
 ## grad_cam.py
 
 Script que recibe la imagen y la procesa, carga el modelo, obtiene la predicción y la capa convolucional de interés para obtener las características relevantes de la imagen.
-
 ---
 
 ## Acerca del Modelo
@@ -99,7 +136,7 @@ Es una técnica utilizada para resaltar las regiones de una imagen que son impor
 
 Grad-CAM realiza el cálculo del gradiente de la salida correspondiente a la clase a visualizar con respecto a las neuronas de una cierta capa de la CNN. Esto permite tener información de la importancia de cada neurona en el proceso de decisión de esa clase en particular. Una vez obtenidos estos pesos, se realiza una combinación lineal entre el mapa de activaciones de la capa y los pesos, de esta manera, se captura la importancia del mapa de activaciones para la clase en particular y se ve reflejado en la imagen de entrada como un mapa de calor con intensidades más altas en aquellas regiones relevantes para la red con las que clasificó la imagen en cierta categoría.
 
-## Proyecto original realizado por:
+## Proyecto modificado del original realizado por:
 
 Isabella Torres Revelo - https://github.com/isa-tr
-Nicolas Diaz Salazar - https://github.com/nicolasdiazsalazar
+Nicolas Diaz Salazar - https://github.com/nicolasdiazsalazar 
