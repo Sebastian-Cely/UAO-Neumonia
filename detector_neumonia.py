@@ -11,10 +11,7 @@ import tkcap
 import os
 from integrator import predict
 from read_img import read_dicom_file, read_jpg_file
-<<<<<<< HEAD
 
-=======
->>>>>>> 166ab163301804f0ebc32383dc0bf426f32ef836
 
 class App:
     def __init__(self):
@@ -99,14 +96,9 @@ class App:
         # Correr el bucle
         self.root.mainloop()
 
-<<<<<<< HEAD
     # MÉTODOS
     # Carga de imágenes
     def load_img_file(self):
-=======
-    #   METHODS
-    def load_img_file(self): 
->>>>>>> 166ab163301804f0ebc32383dc0bf426f32ef836
         filepath = filedialog.askopenfilename(
             initialdir="/",
             title="Select image",
@@ -120,13 +112,8 @@ class App:
         )
         if filepath:
             filepath = os.path.normpath(filepath)
-<<<<<<< HEAD
 
             if filepath.lower().endswith(".dcm"):
-=======
-            
-            if filepath.lower().endswith('.dcm'):
->>>>>>> 166ab163301804f0ebc32383dc0bf426f32ef836
                 self.array, img2show = read_dicom_file(filepath)
             else:
                 self.array, img2show = read_jpg_file(filepath)

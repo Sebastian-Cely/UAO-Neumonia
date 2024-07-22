@@ -1,10 +1,7 @@
 import cv2
 import numpy as np
 
-<<<<<<< HEAD
 # Método para el preprocesamiento de las imágenes 
-=======
->>>>>>> 166ab163301804f0ebc32383dc0bf426f32ef836
 def preprocess(array):
     array = cv2.resize(array, (512, 512))
     array = cv2.cvtColor(array, cv2.COLOR_BGR2GRAY)

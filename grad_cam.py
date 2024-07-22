@@ -7,17 +7,11 @@ tf.compat.v1.experimental.output_all_intermediates(True)
 from preprocess_img import preprocess
 from load_model import load_model
 
-<<<<<<< HEAD
 # Método para procesar la imagen con el modelo de ML
 def grad_cam(array):
     img = preprocess(array)
     #model = load_model('../conv_MLP_84.h5')
     model = load_model('conv_MLP_84.h5')
-=======
-def grad_cam(array):
-    img = preprocess(array)
-    model = load_model('../conv_MLP_84.h5')
->>>>>>> 166ab163301804f0ebc32383dc0bf426f32ef836
     preds = model.predict(img)
     argmax = np.argmax(preds[0])
     output = model.output[:, argmax]
